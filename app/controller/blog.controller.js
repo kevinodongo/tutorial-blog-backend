@@ -1,5 +1,6 @@
 const db = require("../models");
 const Blog = db.blog;
+const Op = db.Sequelize.Op;
 
 // Create and Save a new blog
 exports.create = (req, res) => {
@@ -9,16 +10,16 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
-  const blog = new Blog({
+  // Create a Blog
+  const blog = {
     author: req.body.author,
     content: req.body.content,
     published: req.body.published ? req.body.published : false
-  });
+  }
 
   // Save blog in the database
-  blog
-    .save(blog)
+  Blog
+    .create(blog)
     .then(data => {
       res.send(data);
     })
@@ -28,15 +29,15 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the blog."
       });
     });
-  
+
 };
 
 // Retrieve all blogs from the database.
 exports.findAll = (req, res) => {
     const content = req.query.content;
-    var condition = content ? { content: { $regex: new RegExp(content), $options: "i" } } : {};
-  
-    Blog.find(condition)
+    var condition = content ? { [Op.like]: `%${content}%` } : null;
+
+    Blog.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -46,14 +47,14 @@ exports.findAll = (req, res) => {
             err.message || "Some error occurred while retrieving blogs."
         });
       });
-  
+
 };
 
 // Find a single blog with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Blog.findById(id)
+    Blog.findByPk(id)
       .then(data => {
         if (!data)
           res.status(404).send({ message: "Not found blog with id " + id });
@@ -64,7 +65,7 @@ exports.findOne = (req, res) => {
           .status(500)
           .send({ message: "Error retrieving blog with id=" + id });
       });
-  
+
 };
 
 // Update a blog by the id in the request
@@ -74,10 +75,12 @@ exports.update = (req, res) => {
           message: "Data to update can not be empty!"
         });
       }
-    
+
       const id = req.params.id;
-    
-      Blog.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+
+      Blog.update(req.body, {
+    where: { id: id }
+  })
         .then(data => {
           if (!data) {
             res.status(404).send({
@@ -90,22 +93,24 @@ exports.update = (req, res) => {
             message: "Error updating Blog with id=" + id
           });
         });
-  
+
 };
 
 // Delete a blog with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Blog.findByIdAndRemove(id)
+    Blog.destroy({
+    where: { id: id }
+  })
       .then(data => {
-        if (!data) {
-          res.status(404).send({
-            message: `Cannot delete Blog with id=${id}. Maybe Blog was not found!`
-          });
-        } else {
+        if (data === 1) {
           res.send({
             message: "Blog was deleted successfully!"
+          });
+        } else {
+          res.status(404).send({
+            message: `Cannot delete Blog with id=${id}. Maybe Blog was not found!`
           });
         }
       })
@@ -114,15 +119,18 @@ exports.delete = (req, res) => {
           message: "Could not delete Tutorial with id=" + id
         });
       });
-  
+
 };
 
 // Delete all blogs from the database.
 exports.deleteAll = (req, res) => {
-    Blog.deleteMany({})
+    Blog.destroy({
+    where: {},
+    truncate: false
+  })
     .then(data => {
       res.send({
-        message: `${data.deletedCount} Blogs were deleted successfully!`
+        message: `${data} Blogs were deleted successfully!`
       });
     })
     .catch(err => {
@@ -135,14 +143,14 @@ exports.deleteAll = (req, res) => {
 
 // Find all published blogs
 exports.findAllPublished = (req, res) => {
-  Blog.find({ published: true })
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving blogs."
+  Blog.findAll({ where: { published: true }})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving blogs."
+      });
     });
-  });
 };

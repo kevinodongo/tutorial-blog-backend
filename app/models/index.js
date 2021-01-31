@@ -1,11 +1,16 @@
-const dbConfig = require("../config/db.config");
+const dbConfig = require("../config/db.config.js");
 
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+});
 
 const db = {};
-db.mongoose = mongoose;
-db.url = dbConfig.url;
-db.blog = require("./blog.model.js")(mongoose);
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.blog = require("./blog.model.js")(sequelize, Sequelize);
 
 module.exports = db;

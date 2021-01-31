@@ -20,21 +20,16 @@ app.use(cors(corsOptions))
 
 // 
 const db = require("./app/models");
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  })
-  .then(() => {
-    console.log("Connected to the database!");
-  })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
-  });
-
+db.sequelize.authenticate().then(() => {
+      console.log("Connected to the database!");
+    })
+    .catch(err => {
+      console.log("Cannot connect to the database!", err);
+      process.exit();
+    });
+  
+// to force sync during development use below
+db.sequelize.sync()
  
 // routes
 const blog = require('./app/routes/blog')
