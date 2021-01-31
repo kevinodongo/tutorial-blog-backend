@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 var corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:8080']
 }
 // use cors options
 app.use(cors(corsOptions))

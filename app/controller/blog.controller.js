@@ -135,14 +135,14 @@ exports.deleteAll = (req, res) => {
 
 // Find all published blogs
 exports.findAllPublished = (req, res) => {
-    Blog.find({ published: true })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving blogs."
-      });
+  Blog.find({ published: true })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving blogs."
     });
+  });
 };
