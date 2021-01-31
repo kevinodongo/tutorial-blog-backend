@@ -1,6 +1,4 @@
 const MongoClient = require('mongodb').MongoClient;
-const db = require('db')
-db.connect()
 
 describe('insert', () => {
   let client;
@@ -22,7 +20,7 @@ describe('insert', () => {
   // let us a simple test for our db
   it('should get and post a doc from collection', async () => {
     // 1. insert a record
-    const mockSecret = {_id: '60123b98c757ab700ff8907d', secret: '123456'};
+    const mockSecret = {_id: '60123b98c757ab700ff8907d', author: 'Tim Cook', content: "Hello World"};
     await db.insertOne(mockSecret);
      
     // 2. find the record it should match

@@ -1,0 +1,56 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add mongoose
+
+PATH: 
+  C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\PuTTY\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\odongo\AppData\Local\Yarn\bin;C:\Users\odongo\AppData\Roaming\npm;C:\Users\odongo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\odongo\AppData\Local\Microsoft\WindowsApps;C:\Android\tools\bin\platform-tools;C:\Users\odongo\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  14.4.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\odongo\Desktop\Dev.to\blog-vue-application\blog-vue-back-end\node_modules\@istanbuljs\load-nyc-config\node_modules\resolve-from'
+
+npm manifest: 
+  {
+    "name": "blog-vue-back-end",
+    "version": "1.0.0",
+    "description": "Tutorial Backend for Blog Application",
+    "main": "index.js",
+    "scripts": {
+      "start": "node server/index.js",
+      "dev": "nodemon server/index.js",
+      "test-dev": "jest"
+    },
+    "keywords": [
+      "Mongo",
+      "DB",
+      "Express",
+      "Node"
+    ],
+    "author": "Kevin Odongo",
+    "license": "MIT",
+    "dependencies": {
+      "@shelf/jest-mongodb": "^1.2.3",
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "dotenv": "^8.2.0",
+      "express": "^4.17.1",
+      "jest": "^26.6.3",
+      "mongodb": "^3.6.3"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.7"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
