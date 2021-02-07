@@ -1,5 +1,5 @@
 // INCASE YOU ARE USING MONGO DB REPLACE THE INDEX.JS FILE WITH THIS CONTENT
-//======================================================================
+// ======================================================================
 
 // const express = require("express");
 // const bodyParser = require("body-parser");

@@ -1,16 +1,16 @@
-const dbConfig = require("../config/db.config.js");
+const dbConfig = require("../config/db.config");
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-});
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 
 const db = {};
+db.mongoose = mongoose;
+db.url = dbConfig.url;
+db.blog = require("./blog.model.js")(mongoose);
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.user = require("./user.model")(mongoose);
+db.role = require("./role.model")(mongoose);
 
-db.blog = require("./blog.model.js")(sequelize, Sequelize);
+db.ROLES = ["user", "admin"];
 
 module.exports = db;

@@ -8,7 +8,7 @@ describe('insert', () => {
     const uri = process.env.MONGO_DB_URI;
     client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     await client.connect();
-    db = await client.db("blog").collection('blog');
+    db = await client.db("blog").collection('Blog');
   });
 
   afterAll(async () => {
